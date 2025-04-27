@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Newsletter from '../components/Newsletter';
 
 export default function HomePage() {
   const features = [
@@ -61,7 +62,9 @@ export default function HomePage() {
                   <Link to="/docs" className="text-sm font-semibold leading-6 text-gray-900">
                     Learn More <span aria-hidden="true">→</span>
                   </Link>
+
                 </div>
+                <Newsletter />
               </div>
             </div>
           </div>
