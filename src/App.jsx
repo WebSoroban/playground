@@ -7,6 +7,7 @@ import PlaygroundPage from './pages/PlaygroundPage';
 import DocsPage from './pages/DocsPage';
 import ExamplesPage from './pages/ExamplesPage';
 import NotFoundPage from './pages/NotFoundPage';
+import { ContractsPage } from './pages/ContractPage';
 
 function App() {
   return (
@@ -15,10 +16,12 @@ function App() {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/playground" element={<PlaygroundPage />} />
+          <Route path="/contract" element={<ContractsPage />} />
           <Route path="/docs" element={<DocsPage />} />
           <Route path="/examples" element={<ExamplesPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/playground/:id" element={<PlaygroundPage />} />
+          <Route path="/playground/new" element={<PlaygroundPage />} />
         </Routes>
       </main>
       <Footer />

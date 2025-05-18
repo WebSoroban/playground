@@ -5,7 +5,7 @@ import SorobanLogo from '../assets/websoroban_logo.png';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Playground', href: '/playground' },
+  { name: 'Playground', href: '/contract' },
   { name: 'Documentation', href: '/docs' },
   { name: 'Examples', href: '/examples' },
 ];

@@ -2,11 +2,12 @@ const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const MAILCHIMP_API_KEY = '312cb56791f5f8b8ba9dcbb1a07c942c-us13';
+const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
 const MAILCHIMP_AUDIENCE_ID = 'dfc2ef175c';
 const MAILCHIMP_SERVER_PREFIX = 'us13'; // e.g., 'us1', 'us2'
 
