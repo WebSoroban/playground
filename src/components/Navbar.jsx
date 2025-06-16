@@ -1,117 +1,89 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import SorobanLogo from '../assets/websoroban_logo.png';
-
-const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Playground', href: '/contract' },
-  { name: 'Documentation', href: '/docs' },
-  { name: 'Examples', href: '/examples' },
-];
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5 flex items-center">
-            <span className="sr-only">WebSoroban</span>
-            <img className="h-10 w-auto" src={SorobanLogo} alt="Soroban Logo" />
-            <span className="ml-2 text-xl font-semibold text-gray-900">WebSoroban</span>
-          </Link>
-        </div>
-        <div className="flex lg:hidden">
+    <nav className="mx-auto max-w-4xl mt-3 md:mt-6 mb-3 md:mb-6 px-4">
+      <div className="backdrop-blur-xl bg-black/20 border border-white/10 rounded-xl px-3 md:px-5 py-2.5 shadow-2xl shadow-black/50">
+        <div className="flex justify-between items-center">
+          <a href="/" className="font-bold text-base md:text-lg text-white">
+            WebSoroban
+          </a>
+          
+          <div className="hidden md:flex items-center space-x-6">
+            <a href="/" className="text-xs text-gray-300 hover:text-white transition-colors duration-200">
+              Home
+            </a>
+            <a href="/contract" className="text-xs text-gray-300 hover:text-white transition-colors duration-200">
+              Playground
+            </a>
+            <a href="/docs" className="text-xs text-gray-300 hover:text-white transition-colors duration-200">
+              Learn
+            </a>
+            <a href="/examples" className="text-xs text-gray-300 hover:text-white transition-colors duration-200">
+              Examples
+            </a>
+            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-xs font-medium transition-all duration-200 h-8 px-3 py-1.5 bg-white/90 text-black hover:bg-white border border-white/20 shadow-lg hover:shadow-xl backdrop-blur-sm">
+              Sign In
+            </button>
+          </div>
+
           <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden text-white p-1.5 hover:bg-white/10 rounded-lg transition-colors duration-200"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            {isMenuOpen ? (
+              <X size={18} />
+            ) : (
+              <Menu size={18} />
+            )}
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={`text-sm font-semibold leading-6 ${
-                location.pathname === item.href
-                  ? 'text-stellar-blue'
-                  : 'text-gray-900 hover:text-stellar-blue'
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="https://github.com/WebSoroban"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-stellar-blue"
-          >
-            GitHub <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </nav>
-      {mobileMenuOpen && (
-        <div className="lg:hidden">
-          <div className="fixed inset-0 z-50" />
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <Link to="/" className="-m-1.5 p-1.5 flex items-center">
-                <span className="sr-only">Soroban Playground</span>
-                <img className="h-8 w-auto" src={SorobanLogo} alt="Soroban Logo" />
-                <span className="ml-2 text-xl font-semibold text-gray-900">Soroban</span>
-              </Link>
-              <button
-                type="button"
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                onClick={() => setMobileMenuOpen(false)}
+
+        {isMenuOpen && (
+          <div className="md:hidden mt-3 pt-3 border-t border-white/10">
+            <div className="flex flex-col space-y-3">
+              <a 
+                href="/" 
+                className="text-sm text-gray-300 hover:text-white transition-colors duration-200 py-1.5 hover:bg-white/5 rounded-md px-2"
+                onClick={() => setIsMenuOpen(false)}
               >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                Home
+              </a>
+              <a 
+                href="/contract" 
+                className="text-sm text-gray-300 hover:text-white transition-colors duration-200 py-1.5 hover:bg-white/5 rounded-md px-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Playground
+              </a>
+              <a 
+                href="/docs" 
+                className="text-sm text-gray-300 hover:text-white transition-colors duration-200 py-1.5 hover:bg-white/5 rounded-md px-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Learn
+              </a>
+              <a 
+                href="/examples" 
+                className="text-sm text-gray-300 hover:text-white transition-colors duration-200 py-1.5 hover:bg-white/5 rounded-md px-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Examples
+              </a>
+              <button 
+                className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all duration-200 h-8 px-3 py-1.5 bg-white/10 text-white hover:bg-white/20 border border-white/20 rounded-lg w-fit mt-2 backdrop-blur-sm"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign In
               </button>
             </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
-                        location.pathname === item.href
-                          ? 'text-stellar-blue'
-                          : 'text-gray-900 hover:bg-gray-50'
-                      }`}
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-                <div className="py-6">
-                  <a
-                    href="https://github.com/stellar/soroban"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    GitHub
-                  </a>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </div>
+    </nav>
   );
 }
