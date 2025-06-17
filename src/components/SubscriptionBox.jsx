@@ -11,47 +11,47 @@ export default function SubscriptionBox() {
 
   const handleSubmit = async () => {
     console.log("handleSubmit called with email:", email)
-    
+
     if (!email || isSubmitting) {
       console.log("Early return - no email or already submitting")
       return
     }
-    
+
     setIsSubmitting(true)
     setStatus(null)
     setMessage("")
 
     try {
       console.log("Making API call to /api/subscribe")
-      
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
+
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       })
 
       console.log("Response status:", response.status)
-      
+
       const data = await response.json()
       console.log("Response data:", data)
 
       if (response.ok) {
-        setStatus('success')
-        setMessage('Successfully subscribed! Check your email for confirmation.')
+        setStatus("success")
+        setMessage("Successfully subscribed! Check your email for confirmation.")
         setEmail("")
       } else {
-        setStatus('error')
-        if (data.details && data.details.title === 'Member Exists') {
-          setMessage('This email is already subscribed.')
+        setStatus("error")
+        if (data.details && data.details.title === "Member Exists") {
+          setMessage("This email is already subscribed.")
         } else {
-          setMessage(data.error || 'Subscription failed. Please try again.')
+          setMessage(data.error || "Subscription failed. Please try again.")
         }
       }
     } catch (err) {
-      console.error('Network error details:', err)
-      setStatus('error')
+      console.error("Network error details:", err)
+      setStatus("error")
       setMessage(`Network error: ${err.message}`)
     } finally {
       setIsSubmitting(false)
@@ -60,14 +60,10 @@ export default function SubscriptionBox() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-2xl w-full text-center ">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-          Start Building
-        </h1>
+      <div className="max-w-5xl h-[25rem] w-full text-center bg-gray-200/10 rounded-lg flex flex-col items-center justify-center px-8 relative shadow-[10px_10px_30px_rgba(255,255,255,0.1),inset_-20px_-20px_60px_rgba(255,255,255,0.05)]">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">Start Building</h1>
 
-        <p className="text-gray-400 text-lg md:text-xl mb-12 max-w-lg mx-auto">
-          No clutter. No delays. No dev drama.
-        </p>
+        <p className="text-gray-400 text-lg md:text-xl mb-12 max-w-lg mx-auto">No clutter. No delays. No dev drama.</p>
 
         <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto mb-6">
           <div className="relative flex-1">
@@ -77,7 +73,7 @@ export default function SubscriptionBox() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault()
                   handleSubmit()
                 }
@@ -97,12 +93,14 @@ export default function SubscriptionBox() {
         </div>
 
         {status && (
-          <div className={`flex items-center justify-center gap-2 p-4 rounded-lg ${
-            status === 'success' 
-              ? 'bg-green-900/20 border border-green-700/30 text-green-400' 
-              : 'bg-red-900/20 border border-red-700/30 text-red-400'
-          }`}>
-            {status === 'success' ? (
+          <div
+            className={`flex items-center justify-center gap-2 p-4 rounded-lg ${
+              status === "success"
+                ? "bg-green-900/20 border border-green-700/30 text-green-400"
+                : "bg-red-900/20 border border-red-700/30 text-red-400"
+            }`}
+          >
+            {status === "success" ? (
               <CheckCircle className="w-5 h-5 flex-shrink-0" />
             ) : (
               <XCircle className="w-5 h-5 flex-shrink-0" />
@@ -110,8 +108,6 @@ export default function SubscriptionBox() {
             <span className="text-sm">{message}</span>
           </div>
         )}
-
-
       </div>
     </div>
   )
