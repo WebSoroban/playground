@@ -1,65 +1,109 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+"use client"
 
-const sampleContracts = [
-  { id: 1, name: 'Hello World', description: 'Basic greeting contract', lastModified: '2023-08-15' },
-  { id: 2, name: 'Token', description: 'Simple token contract', lastModified: '2023-08-14' },
-];
+import { useState } from "react"
+import { Search, Plus } from "lucide-react"
 
 export function ContractsPage() {
-  const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  const filteredContracts = sampleContracts.filter(contract =>
-    contract.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [searchQuery, setSearchQuery] = useState("")
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Smart Contracts</h1>
-        <Link
-              to="/playground/new"
-              className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              New Playground
-        </Link>
-        <div className="w-64">
-          <input
-            type="text"
-            placeholder="Search contracts..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+    <div className="flex h-screen bg-black">
+
+      <div className="w-64 bg-[#090909] border-r border-[#333] flex flex-col p-4 text-white">
+        <div className="text-lg font-semibold mb-4">Menu</div>
+        <nav className="flex-1">
+          <ul className="space-y-2">
+            <li>
+              <a
+                href="/playground"
+                className="block text-sm text-white/80 hover:text-white px-3 py-2 rounded-md bg-purple-800/30"
+              >
+                Playground
+              </a>
+            </li>
+            <li>
+              <a href="#" className="block text-sm text-white/60 hover:text-white px-3 py-2">
+                Settings
+              </a>
+            </li>
+            <li>
+              <a href="#" className="block text-sm text-white/60 hover:text-white px-3 py-2">
+                Help
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul className="divide-y divide-gray-200">
-          {filteredContracts.map((contract) => (
-            <li key={contract.id}>
-              <div
-                className="px-4 py-4 flex items-center hover:bg-gray-50 cursor-pointer"
-                onClick={() => navigate(`/playground/${contract.id}`)}
+      <main className="flex-1 overflow-auto">
+        <nav className="border-b bg-[#090909] border-[#333] px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <a href="/" className="font-bold text-xl text-white">
+                WebSoroban
+              </a>
+              <a
+                href="/playground"
+                className="text-sm text-white/80 hover:text-white px-3 py-1 rounded-md bg-purple-800/30"
               >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-blue-600 truncate">{contract.name}</p>
-                    <div className="ml-2 flex-shrink-0 flex">
-                      <p className="text-sm text-gray-500">
-                        Last modified: {contract.lastModified}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">{contract.description}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+                Playground
+              </a>
+              <a href="#" className="text-sm text-white/60 hover:text-white px-3 py-1">
+                Community
+              </a>
+              <a href="#" className="text-sm text-white/60 hover:text-white px-3 py-1">
+                Guides
+              </a>
+            </div>
+            <div className="flex items-center space-x-2">
+              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 px-3 bg-purple-600 hover:bg-purple-700">
+                Go
+              </button>
+              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 px-3 bg-transparent hover:bg-gray-800 text-white/70 hover:text-white">
+                <span className="sr-only">Account</span>
+                <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center">?</div>
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <div className="p-6">
+          <div className="relative mb-8 ">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400 " />
+            </div>
+            <input
+              type="search"
+              placeholder="Search..."
+              className="flex h-9 w-full border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 border-[#333]  pl-10 rounded-md focus:ring-purple-500 focus:border-purple-500 text-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-4 text-white">Projects</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[1, 2, 3].map((project) => (
+                <ProjectCard key={project} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-  );
+  )
+}
+
+function ProjectCard() {
+  return (
+    <a href="/playground/ide">
+      <div className="flex items-center justify-center bg-[#0a0a0a] border border-[#333] h-36 transition-all duration-300 rounded-lg cursor-pointer shadow-[0_0_15px_rgba(147,51,234,0.1)] text-white">
+        <div className="text-center">
+          <Plus className="h-8 w-8 mx-auto mb-2 text-purple-400" />
+          <p className="text-sm font-medium">New Project</p>
+        </div>
+      </div>
+    </a>
+  )
 }
